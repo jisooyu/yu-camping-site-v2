@@ -1,5 +1,5 @@
 import axios from 'axios';
-const API_URL = '/api/camps/';
+const API_URL = '/api/camps';
 
 const createCamp = async (campData, token) => {
   const config = {
@@ -8,6 +8,7 @@ const createCamp = async (campData, token) => {
     },
   };
   const response = await axios.post(API_URL, campData, config);
+  console.log('response from campService ', response);
   return response.data;
 };
 

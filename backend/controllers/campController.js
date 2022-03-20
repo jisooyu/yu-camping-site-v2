@@ -53,7 +53,7 @@ const getCamp = asyncHandler(async (req, res) => {
 const createCamp = asyncHandler(async (req, res) => {
   const { camp, description, camptype, url } = req.body;
 
-  if (!addr1 || !addr2) {
+  if (!camp || !description || !url) {
     res.status(400);
     throw new Error('Please add address 1 and address 2');
   }
@@ -69,6 +69,7 @@ const createCamp = asyncHandler(async (req, res) => {
   const campData = await Camp.create({
     camp,
     description,
+    user: req.user.id,
     camptype,
     url,
   });

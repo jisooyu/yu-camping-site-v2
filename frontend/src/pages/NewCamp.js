@@ -27,7 +27,7 @@ const NewCamp = () => {
       dispatch(reset());
       navigate('/new-camp');
     }
-  }, [dispatch, isError, isSuccess, navigate]);
+  }, [dispatch, isError, isSuccess, navigate, message]);
 
   const onSubmit = (e) => {
     e.preventDefault();
