@@ -5,6 +5,6 @@ import campReducer from '../features/camps/campSlice';
 export const store = configureStore({
   reducer: {
     auth: authReducer,
-    camp: campReducer,
+    camps: campReducer,
   },
 });

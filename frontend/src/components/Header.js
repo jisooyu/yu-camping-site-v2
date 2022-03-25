@@ -1,8 +1,4 @@
-import {
-  AiOutlineUserAdd,
-  AiOutlineLogin,
-  AiOutlineLogout,
-} from 'react-icons/ai';
+import { FaSignInAlt, FaSignOutAlt, FaUser } from 'react-icons/fa';
 import { Link, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { logout, reset } from '../features/auth/authSlice';
@@ -25,20 +21,20 @@ const Header = () => {
         {user ? (
           <li>
             <div className='btn' onClick={onLogout}>
-              <AiOutlineLogout /> Logout
+              <FaSignOutAlt /> Logout
             </div>
           </li>
         ) : (
           <>
             <li>
               <Link to='/login'>
-                <AiOutlineLogin />
+                <FaSignInAlt />
                 Login
               </Link>
             </li>
             <li>
               <Link to='/register'>
-                <AiOutlineUserAdd />
+                <FaUser />
                 Register
               </Link>
             </li>

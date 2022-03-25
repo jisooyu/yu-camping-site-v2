@@ -1,7 +1,7 @@
 const asyncHandler = require('express-async-handler');
 
-const User = require('../models/User');
-const Camp = require('../models/Camp');
+const User = require('../models/userModel');
+const Camp = require('../models/campModel');
 
 // @desc    Get user camps
 // @route   GET /api/camps
@@ -51,11 +51,21 @@ const getCamp = asyncHandler(async (req, res) => {
 // @route   POST /api/camps
 // @access  Private
 const createCamp = asyncHandler(async (req, res) => {
-  const { camp, description, camptype, url } = req.body;
+  const { campName, campEmail, description, camptype, url, campstatus } =
+    req.body;
 
-  if (!camp || !description || !url) {
+  if (
+    !campName ||
+    !campEmail ||
+    !description ||
+    !url ||
+    !camptype ||
+    !campstatus
+  ) {
     res.status(400);
-    throw new Error('Please add address 1 and address 2');
+    throw new Error(
+      'Please add camp name, camp email, description, url, camptype, campstatus'
+    );
   }
 
   // Get user using the id in the JWT
@@ -67,11 +77,13 @@ const createCamp = asyncHandler(async (req, res) => {
   }
 
   const campData = await Camp.create({
-    camp,
+    campName,
+    campEmail,
     description,
     user: req.user.id,
     camptype,
     url,
+    campstatus,
   });
 
   res.status(201).json(campData);

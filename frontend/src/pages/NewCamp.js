@@ -8,14 +8,17 @@ import Spinner from '../components/Spinner';
 const NewCamp = () => {
   const { user } = useSelector((state) => state.auth);
   const { isLoading, isError, isSuccess, message } = useSelector(
-    (state) => state.camp
+    (state) => state.camps
   );
-
-  const [camp, setCamp] = useState('');
-  const [email, setEmail] = useState(user.email);
+  const [name] = useState(user.name);
+  const [email] = useState(user.email);
+  const [campName, setCampName] = useState('');
+  const [campEmail, setCampEmail] = useState('');
   const [description, setDescription] = useState('');
   const [camptype, setCampType] = useState('');
   const [url, setUrl] = useState('');
+  const [campstatus, setCampStatus] = useState('');
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -31,7 +34,16 @@ const NewCamp = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    dispatch(createCamp({ camp, description, camptype, url }));
+    dispatch(
+      createCamp({
+        campName,
+        campEmail,
+        description,
+        camptype,
+        url,
+        campstatus,
+      })
+    );
   };
 
   if (isLoading) {
@@ -46,35 +58,22 @@ const NewCamp = () => {
       <section className='form'>
         <form onSubmit={onSubmit}>
           <div className='form-group'>
-            <label htmlFor='camp'>Camp PIC Name</label>
+            <label htmlFor='campName'>Camp PIC Name</label>
             <input
               type='text'
               className='form-control'
-              value={camp}
-              onChange={(e) => setCamp(e.target.value)}
+              value={campName}
+              onChange={(e) => setCampName(e.target.value)}
             />
           </div>
           <div className='form-group'>
-            <label htmlFor='email'>Camp PIC Email</label>
+            <label htmlFor='campEmail'>Camp PIC Email</label>
             <input
               type='text'
               className='form-control'
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              value={campEmail}
+              onChange={(e) => setCampEmail(e.target.value)}
             />
-          </div>
-          <div className='form-group'>
-            <label htmlFor='camptype'>Camping Site</label>
-            <select
-              name='camptype'
-              id='camptype'
-              value={camptype}
-              onChange={(e) => setCampType(e.target.value)}>
-              <option value='tentCamping'>텐트캠핑장</option>
-              <option value='motorCamping'>오토캠핑장</option>
-              <option value='glamping'>글램핑</option>
-              <option value='others'>기타</option>
-            </select>
           </div>
           <div className='form-group'>
             <label htmlFor='description'>캠핑장 소개</label>
@@ -89,6 +88,19 @@ const NewCamp = () => {
               }}></textarea>
           </div>
           <div className='form-group'>
+            <label htmlFor='camptype'>Camping Site Type</label>
+            <select
+              name='camptype'
+              id='camptype'
+              value={camptype}
+              onChange={(e) => setCampType(e.target.value)}>
+              <option value='tentCamping'>텐트캠핑장</option>
+              <option value='motorCamping'>오토캠핑장</option>
+              <option value='glamping'>글램핑</option>
+              <option value='others'>기타</option>
+            </select>
+          </div>
+          <div className='form-group'>
             <label htmlFor='url'>URL</label>
             <input
               name='url'
@@ -99,6 +111,18 @@ const NewCamp = () => {
               onChange={(e) => {
                 setUrl(e.target.value);
               }}></input>
+          </div>
+          <div className='form-group'>
+            <label htmlFor='campstatus'>캠핑장 상황</label>
+            <select
+              name='campstatus'
+              id='campstatus'
+              value={campstatus}
+              onChange={(e) => setCampStatus(e.target.value)}>
+              <option value='new'>신장</option>
+              <option value='open'>개장</option>
+              <option value='closed'>휴장</option>
+            </select>
           </div>
           <div className='form-group'>
             <button className='btn btn-block'>Submit</button>

@@ -45,10 +45,9 @@ export const campSlice = createSlice({
       .addCase(createCamp.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(createCamp.fulfilled, (state, action) => {
+      .addCase(createCamp.fulfilled, (state) => {
         state.isLoading = false;
         state.isSuccess = true;
-        state.use = action.payload;
       })
       .addCase(createCamp.rejected, (state, action) => {
         state.isLoading = false;
@@ -59,6 +58,5 @@ export const campSlice = createSlice({
   },
 });
 
-const { actions, reducer } = campSlice;
-export const { reset } = actions;
-export default reducer;
+export const { reset } = campSlice.actions;
+export default campSlice.reducer;
