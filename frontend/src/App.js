@@ -8,6 +8,7 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import NewCamp from './pages/NewCamp';
+import Camps from './pages/Camps';
 
 function App() {
   return (
@@ -21,6 +22,9 @@ function App() {
             <Route path='/register' element={<Register />} />
             <Route path='/new-camp' element={<PrivateRoute />}>
               <Route path='/new-camp' element={<NewCamp />} />
+            </Route>
+            <Route path='/camps' element={<PrivateRoute />}>
+              <Route path='/camps' element={<Camps />} />
             </Route>
           </Routes>
         </div>

@@ -12,7 +12,7 @@ const Home = () => {
         <FaPencilAlt />
         Add New Camp Site
       </Link>
-      <Link to='/tickets' className='btn btn-block'>
+      <Link to='/camps' className='btn btn-block'>
         <FaListAlt />
         View Camp Sites
       </Link>
