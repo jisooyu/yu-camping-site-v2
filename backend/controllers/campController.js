@@ -51,21 +51,19 @@ const getCamp = asyncHandler(async (req, res) => {
 // @route   POST /api/camps
 // @access  Private
 const createCamp = asyncHandler(async (req, res) => {
-  const { campName, campEmail, description, camptype, url, campstatus } =
-    req.body;
+  const {
+    campName,
+    reservation,
+    description,
+    camptype,
+    homePageUrl,
+    imageUrl,
+    campstatus,
+  } = req.body;
 
-  if (
-    !campName ||
-    !campEmail ||
-    !description ||
-    !url ||
-    !camptype ||
-    !campstatus
-  ) {
+  if (!campName) {
     res.status(400);
-    throw new Error(
-      'Please add camp name, camp email, description, url, camptype, campstatus'
-    );
+    throw new Error('Please add camp name');
   }
 
   // Get user using the id in the JWT
@@ -77,17 +75,19 @@ const createCamp = asyncHandler(async (req, res) => {
   }
 
   const campData = await Camp.create({
-    campName,
-    campEmail,
-    description,
     user: req.user.id,
+    campName,
+    reservation,
+    description,
     camptype,
-    url,
+    homePageUrl,
+    imageUrl,
     campstatus,
   });
 
   res.status(201).json(campData);
 });
+
 module.exports = {
   getCamps,
   getCamp,

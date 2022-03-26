@@ -21,7 +21,6 @@ const Home = () => {
         <>
           <section className='heading'>
             <h1>What to you need help with?</h1>
-
             <p>Please log in first</p>
           </section>
         </>

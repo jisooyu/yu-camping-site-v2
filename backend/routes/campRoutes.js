@@ -8,5 +8,6 @@ const {
 const { protect } = require('../middleware/authMiddleware');
 
 router.route('/').get(protect, getCamps).post(protect, createCamp);
+
 router.route('/:id').get(protect, getCamp);
 module.exports = router;

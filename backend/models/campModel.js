@@ -8,29 +8,25 @@ const campSchema = mongoose.Schema(
     },
     campName: {
       type: String,
-      required: [true, 'Please enter a camp name'],
+      required: true,
     },
-    campEmail: {
+    reservation: {
       type: String,
-      required: [true, 'Please enter a camp email to contact'],
     },
     description: {
       type: String,
-      required: [true, 'Please enter a description of the issue'],
     },
     camptype: {
       type: String,
-      required: true,
-      enum: ['tentCamping', 'motorCamping', 'glamping', 'others'],
     },
-    url: {
+    homePageUrl: {
       type: String,
-      required: [true, 'Please enter a camp url for information'],
+    },
+    imageUrl: {
+      type: String,
     },
     status: {
       type: String,
-      required: true,
-      enum: ['new', 'open', 'closed'],
       default: 'new',
     },
   },

@@ -10,13 +10,12 @@ const NewCamp = () => {
   const { isLoading, isError, isSuccess, message } = useSelector(
     (state) => state.camps
   );
-  const [name] = useState(user.name);
-  const [email] = useState(user.email);
   const [campName, setCampName] = useState('');
-  const [campEmail, setCampEmail] = useState('');
+  const [reservation, setReservation] = useState('');
   const [description, setDescription] = useState('');
   const [camptype, setCampType] = useState('');
-  const [url, setUrl] = useState('');
+  const [homePageUrl, setHomePageUrl] = useState('');
+  const [imageUrl, setImageUrl] = useState('');
   const [campstatus, setCampStatus] = useState('');
 
   const dispatch = useDispatch();
@@ -37,10 +36,11 @@ const NewCamp = () => {
     dispatch(
       createCamp({
         campName,
-        campEmail,
+        reservation,
         description,
         camptype,
-        url,
+        homePageUrl,
+        imageUrl,
         campstatus,
       })
     );
@@ -67,12 +67,12 @@ const NewCamp = () => {
             />
           </div>
           <div className='form-group'>
-            <label htmlFor='campEmail'>Camp PIC Email</label>
+            <label htmlFor='reservation'>Camp Reservation</label>
             <input
               type='text'
               className='form-control'
-              value={campEmail}
-              onChange={(e) => setCampEmail(e.target.value)}
+              value={reservation}
+              onChange={(e) => setReservation(e.target.value)}
             />
           </div>
           <div className='form-group'>
@@ -101,15 +101,27 @@ const NewCamp = () => {
             </select>
           </div>
           <div className='form-group'>
-            <label htmlFor='url'>URL</label>
+            <label htmlFor='homePageUrl'>Home Page URL</label>
             <input
-              name='url'
-              id='url'
+              name='homePageUrl'
+              id='homePageUrl'
               className='form-control'
-              value={url}
-              placeholder='url'
+              value={homePageUrl}
+              placeholder='homePageUrl'
               onChange={(e) => {
-                setUrl(e.target.value);
+                setHomePageUrl(e.target.value);
+              }}></input>
+          </div>
+          <div className='form-group'>
+            <label htmlFor='imageUrl'>Picture URL</label>
+            <input
+              name='imageUrl'
+              id='imageUrl'
+              className='form-control'
+              value={imageUrl}
+              placeholder='imageUrl'
+              onChange={(e) => {
+                setImageUrl(e.target.value);
               }}></input>
           </div>
           <div className='form-group'>

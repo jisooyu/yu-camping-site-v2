@@ -1,6 +1,6 @@
 const axios = require('axios');
 
-const fetchData = async () => {
+const fetchGoCampingData = async () => {
   let serviceKey = decodeURIComponent(process.env.SERVICE_KEY);
   try {
     return await axios.get(process.env.GO_CAMPING_URL, {
@@ -21,4 +21,4 @@ const fetchData = async () => {
   }
 };
 
-module.exports = fetchData;
+module.exports = fetchGoCampingData;
