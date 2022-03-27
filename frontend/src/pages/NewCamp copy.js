@@ -4,14 +4,12 @@ import { useSelector, useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 import { createCamp, reset } from '../features/camps/campSlice';
 import Spinner from '../components/Spinner';
-import BackButton from '../components/BackButton';
 
 const NewCamp = () => {
   const { user } = useSelector((state) => state.auth);
   const { isLoading, isError, isSuccess, message } = useSelector(
     (state) => state.camps
   );
-
   const [email] = useState(user.email);
   const [campName, setCampName] = useState('');
   const [reservation, setReservation] = useState('');
@@ -28,14 +26,16 @@ const NewCamp = () => {
     if (isError) {
       toast.error(message);
     }
+
     if (isSuccess) {
       dispatch(reset());
-      navigate('/new-camp');
+      navigate('/camps');
     }
-  }, [dispatch, isError, isSuccess, navigate]);
+  }, [dispatch, isError, isSuccess, navigate, message]);
 
   const onSubmit = (e) => {
     e.preventDefault();
+
     dispatch(
       createCamp({
         campName,
@@ -54,7 +54,6 @@ const NewCamp = () => {
   }
   return (
     <>
-      <BackButton url='/' />
       <section className='heading'>
         <h1>Create New Camp</h1>
         <p>Please fill out the form below</p>

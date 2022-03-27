@@ -15,7 +15,8 @@ const getCamps = asyncHandler(async (req, res) => {
     throw new Error('User not found');
   }
 
-  const camps = await Camp.find({ user: req.user.id });
+  // const camps = await Camp.find({ user: req.user.id });
+  const camps = await Camp.find();
 
   res.status(200).json(camps);
 });

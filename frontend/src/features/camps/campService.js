@@ -21,9 +21,23 @@ const getCamps = async (token) => {
   return response.data;
 };
 
+// Get user ticket
+const getCamp = async (campId, token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  const response = await axios.get(API_URL + campId, config);
+
+  return response.data;
+};
+
 const campService = {
   createCamp,
   getCamps,
+  getCamp,
 };
 
 export default campService;

@@ -28,14 +28,14 @@ const register = asyncHandler(async (req, res) => {
     // Hash password & generate token
     const salt = await bcrypt.genSalt(10);
     user.password = await bcrypt.hash(password, salt);
-    user.token = await generateToken(user.id);
+    // user.token = await generateToken(user.id);
     await user.save();
 
     res.status(201).json({
       id: user.id,
       name: user.name,
       email: user.email,
-      token: user.token,
+      // token: user.token,
     });
   } catch (err) {
     console.error(err.message);

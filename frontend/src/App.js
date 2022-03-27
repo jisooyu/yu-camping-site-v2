@@ -9,6 +9,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import NewCamp from './pages/NewCamp';
 import Camps from './pages/Camps';
+import Camp from './pages/Camp';
 
 function App() {
   return (
@@ -25,6 +26,9 @@ function App() {
             </Route>
             <Route path='/camps' element={<PrivateRoute />}>
               <Route path='/camps' element={<Camps />} />
+            </Route>
+            <Route path='/camp/:campId' element={<PrivateRoute />}>
+              <Route path='/camp/:campId' element={<Camp />} />
             </Route>
           </Routes>
         </div>
