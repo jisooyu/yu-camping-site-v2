@@ -10,13 +10,13 @@ const initialState = {
   message: '',
 };
 
-// Create new camp
-export const createCamp = createAsyncThunk(
-  'camp/create',
-  async (campData, thunkAPI) => {
+// Create new image
+export const createFormData = createAsyncThunk(
+  'camp/createFormData',
+  async (formData, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token;
-      return await campService.createCamp(campData, token);
+      return await campService.createFormData(formData, token);
     } catch (error) {
       const message =
         (error.response &&
@@ -28,6 +28,25 @@ export const createCamp = createAsyncThunk(
     }
   }
 );
+
+// Create new camp
+// export const createCamp = createAsyncThunk(
+//   'camp/create',
+//   async (campData, thunkAPI) => {
+//     try {
+//       const token = thunkAPI.getState().auth.user.token;
+//       return await campService.createCamp(campData, token);
+//     } catch (error) {
+//       const message =
+//         (error.response &&
+//           error.response.data &&
+//           error.response.data.message) ||
+//         error.message ||
+//         error.toString();
+//       return thunkAPI.rejectWithValue(message);
+//     }
+//   }
+// );
 
 // Get camps
 export const getCamps = createAsyncThunk(
@@ -48,7 +67,7 @@ export const getCamps = createAsyncThunk(
   }
 );
 
-// Get user ticket
+// Get camp
 export const getCamp = createAsyncThunk(
   'camps/get',
   async (campId, thunkAPI) => {
@@ -77,14 +96,14 @@ export const campSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(createCamp.pending, (state) => {
+      .addCase(createFormData.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(createCamp.fulfilled, (state) => {
+      .addCase(createFormData.fulfilled, (state) => {
         state.isLoading = false;
         state.isSuccess = true;
       })
-      .addCase(createCamp.rejected, (state, action) => {
+      .addCase(createFormData.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;

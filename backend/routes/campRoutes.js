@@ -1,13 +1,25 @@
 const express = require('express');
+const multer = require('multer');
 const router = express.Router();
 const {
   getCamps,
   getCamp,
   createCamp,
 } = require('../controllers/campController');
+
 const { protect } = require('../middleware/authMiddleware');
 
-router.route('/').get(protect, getCamps).post(protect, createCamp);
+// multer storage
+
+// multer middleware
+const upload = multer({ dest: 'uploads/' });
+
+// router.route('/').get(protect, getCamps).post(protect, createCamp);
+router
+  .route('/')
+  .get(protect, getCamps)
+  .post(protect, upload.single('imageFile'), createCamp);
 
 router.route('/:id').get(protect, getCamp);
+
 module.exports = router;

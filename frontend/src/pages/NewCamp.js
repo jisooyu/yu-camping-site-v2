@@ -2,23 +2,25 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
-import { createCamp, reset } from '../features/camps/campSlice';
+
+import { createFormData, reset } from '../features/camps/campSlice';
 import Spinner from '../components/Spinner';
 import BackButton from '../components/BackButton';
 
+// to fix buffer error
+window.Buffer = window.Buffer || require('buffer').Buffer;
+
 const NewCamp = () => {
-  const { user } = useSelector((state) => state.auth);
   const { isLoading, isError, isSuccess, message } = useSelector(
     (state) => state.camps
   );
-
-  const [email] = useState(user.email);
   const [campName, setCampName] = useState('');
   const [reservation, setReservation] = useState('');
   const [description, setDescription] = useState('');
   const [camptype, setCampType] = useState('');
   const [homePageUrl, setHomePageUrl] = useState('');
   const [imageUrl, setImageUrl] = useState('');
+  const [imageFile, setImageFile] = useState('');
   const [campstatus, setCampStatus] = useState('');
 
   const dispatch = useDispatch();
@@ -32,21 +34,26 @@ const NewCamp = () => {
       dispatch(reset());
       navigate('/new-camp');
     }
+    // eslint-disable-next-line
   }, [dispatch, isError, isSuccess, navigate]);
 
-  const onSubmit = (e) => {
+  const handleImage = async (e) => {
+    const file = e.target.files[0];
+    setImageFile(file);
+  };
+
+  const onSubmit = async (e) => {
     e.preventDefault();
-    dispatch(
-      createCamp({
-        campName,
-        reservation,
-        description,
-        camptype,
-        homePageUrl,
-        imageUrl,
-        campstatus,
-      })
-    );
+    const formData = new FormData();
+    formData.append('imageFile', imageFile);
+    formData.append('campName', campName);
+    formData.append('description', description);
+    formData.append('reservation', reservation);
+    formData.append('camptype', camptype);
+    formData.append('homePageUrl', homePageUrl);
+    formData.append('imageUrl', imageUrl);
+    formData.append('campstatus', campstatus);
+    dispatch(createFormData(formData));
   };
 
   if (isLoading) {
@@ -62,19 +69,12 @@ const NewCamp = () => {
       <section className='form'>
         <form onSubmit={onSubmit}>
           <div className='form-group'>
-            <label htmlFor='name'>Camp Manager Email</label>
-            <input
-              type='text'
-              className='form-control'
-              value={email}
-              disabled
-            />
-          </div>
-          <div className='form-group'>
             <label htmlFor='campName'>Camp PIC Name</label>
             <input
+              name='campName'
               type='text'
               className='form-control'
+              id='campName'
               value={campName}
               onChange={(e) => setCampName(e.target.value)}
             />
@@ -84,6 +84,8 @@ const NewCamp = () => {
             <input
               type='text'
               className='form-control'
+              name='reservation'
+              id='reservation'
               value={reservation}
               onChange={(e) => setReservation(e.target.value)}
             />
@@ -135,7 +137,8 @@ const NewCamp = () => {
               placeholder='imageUrl'
               onChange={(e) => {
                 setImageUrl(e.target.value);
-              }}></input>
+              }}
+            />
           </div>
           <div className='form-group'>
             <label htmlFor='campstatus'>캠핑장 상황</label>
@@ -148,6 +151,17 @@ const NewCamp = () => {
               <option value='open'>개장</option>
               <option value='closed'>휴장</option>
             </select>
+          </div>
+          <div className='form-group'>
+            <label htmlFor='imageFile'>Upload Images</label>
+            <input
+              type='file'
+              name='imageFile'
+              id='imageFile'
+              className='form-control'
+              accept='image/jpeg, image/jp, image/png'
+              onChange={handleImage}
+            />
           </div>
           <div className='form-group'>
             <button className='btn btn-block'>Submit</button>

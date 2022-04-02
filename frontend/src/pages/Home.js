@@ -16,6 +16,10 @@ const Home = () => {
             <FaListAlt />
             View Camp Sites
           </Link>
+          {/* <Link to='/camp/postImage' className='btn btn-block'>
+            <FaListAlt />
+            Upload Image
+          </Link> */}
         </>
       ) : (
         <>

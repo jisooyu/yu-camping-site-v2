@@ -1,12 +1,14 @@
 const asyncHandler = require('express-async-handler');
-
 const User = require('../models/userModel');
 const Camp = require('../models/campModel');
+const { upload } = require('./awsController');
+
+// const s3 = require('./awsController');
 
 // @desc    Get user camps
 // @route   GET /api/camps
 // @access  Private
-const getCamps = asyncHandler(async (req, res) => {
+const getCamps = asyncHandler(async (req, res, next) => {
   // Get user using the id in the JWT
   const user = await User.findById(req.user.id);
 
@@ -62,19 +64,19 @@ const createCamp = asyncHandler(async (req, res) => {
     campstatus,
   } = req.body;
 
-  if (!campName) {
-    res.status(400);
-    throw new Error('Please add camp name');
-  }
+  const image = req.file;
 
   // Get user using the id in the JWT
   const user = await User.findById(req.user.id);
-
   if (!user) {
     res.status(401);
     throw new Error('User not found');
   }
 
+  // upload imageFile to AWS S3
+  const result = await upload(image);
+
+  // document creation
   const campData = await Camp.create({
     user: req.user.id,
     campName,
@@ -83,6 +85,7 @@ const createCamp = asyncHandler(async (req, res) => {
     camptype,
     homePageUrl,
     imageUrl,
+    s3ImageUrl: result.Location,
     campstatus,
   });
 

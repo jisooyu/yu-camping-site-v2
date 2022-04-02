@@ -25,6 +25,9 @@ const campSchema = mongoose.Schema(
     imageUrl: {
       type: String,
     },
+    s3ImageUrl: {
+      type: String,
+    },
     status: {
       type: String,
       default: 'new',

@@ -7,7 +7,6 @@ import Camp from './Camp';
 
 function Camps() {
   const { camps, isLoading, isSuccess } = useSelector((state) => state.camps);
-  console.log(camps);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -34,11 +33,13 @@ function Camps() {
     <>
       <BackButton url='/' />
       <h1>Camp Site Info</h1>
-      <ul>
-        {camps.map((camp) => (
-          <Camp key={camp._id} {...camp} />
-        ))}
-      </ul>
+      <div className='camp-desc'>
+        <ul>
+          {camps.map((camp) => (
+            <Camp key={camp._id} {...camp} />
+          ))}
+        </ul>
+      </div>
     </>
   );
 }

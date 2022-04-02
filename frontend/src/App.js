@@ -10,6 +10,8 @@ import Register from './pages/Register';
 import NewCamp from './pages/NewCamp';
 import Camps from './pages/Camps';
 import Camp from './pages/Camp';
+// import UploadImageToS3WithReactS3 from './pages/UploadImageToS3WithReactS3';
+// import PostImage from './pages/PostImage';
 
 function App() {
   return (
