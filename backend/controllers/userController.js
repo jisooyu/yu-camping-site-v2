@@ -28,14 +28,14 @@ const register = asyncHandler(async (req, res) => {
     // Hash password & generate token
     const salt = await bcrypt.genSalt(10);
     user.password = await bcrypt.hash(password, salt);
-    // user.token = await generateToken(user.id);
+    user.token = await generateToken(user._id);
     await user.save();
 
     res.status(201).json({
-      id: user.id,
+      id: user._id,
       name: user.name,
       email: user.email,
-      // token: user.token,
+      token: user.token,
     });
   } catch (err) {
     console.error(err.message);
@@ -58,9 +58,9 @@ const login = asyncHandler(async (req, res) => {
     }
 
     // generate token
-    user.token = generateToken(user.id);
+    user.token = generateToken(user._id);
     res.status(200).json({
-      id: user.id,
+      id: user._id,
       email: user.email,
       token: user.token,
     });
@@ -81,6 +81,7 @@ const getMe = asyncHandler(async (req, res) => {
   res.status(200).json(user);
 });
 
+// 여기서 부터는 token에 관한 코드
 // token generator
 const generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {

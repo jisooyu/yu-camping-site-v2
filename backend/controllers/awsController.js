@@ -25,4 +25,3 @@ function upload(file) {
 }
 
 module.exports = { upload };
-// download a file from s3

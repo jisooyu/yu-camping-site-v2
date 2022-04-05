@@ -9,12 +9,10 @@ const {
 
 const { protect } = require('../middleware/authMiddleware');
 
-// multer storage
-
 // multer middleware
 const upload = multer({ dest: 'uploads/' });
 
-// router.route('/').get(protect, getCamps).post(protect, createCamp);
+// router.route
 router
   .route('/')
   .get(protect, getCamps)
